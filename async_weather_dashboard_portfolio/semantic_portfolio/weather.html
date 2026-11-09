@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Search for a city to see current weather conditions, temperature, humidity, and wind speed.">
+  <meta name="theme-color" content="#14213d">
+  <title>Weather Dashboard | Prabhuprakash Mohapatra</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .weather-wrap { max-width: 900px; margin-inline: auto; }
+    .weather-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: clamp(1rem, 4vw, 1.7rem); box-shadow: var(--shadow); }
+    .search-form { display: flex; align-items: end; gap: .7rem; flex-wrap: wrap; }
+    .search-form .form-field { flex: 1 1 250px; margin: 0; }
+    .search-form input { min-height: 48px; font-size: 1rem; }
+    .search-form button { min-height: 48px; }
+    .weather-message { min-height: 1.6rem; color: var(--muted); margin-block: .8rem; }
+    .weather-message.error { color: #b42318; }
+    .weather-result { margin-top: 1rem; }
+    .weather-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+    .weather-place { margin: 0; font-size: clamp(1.6rem, 5vw, 2.3rem); }
+    .weather-condition { color: var(--muted); margin: .2rem 0 0; text-transform: capitalize; }
+    .weather-temp { font-size: clamp(3.5rem, 12vw, 5.5rem); line-height: 1; font-weight: 800; letter-spacing: -.06em; white-space: nowrap; }
+    .weather-grid { display: grid; grid-template-columns: 1fr; gap: .8rem; margin-top: 1.2rem; }
+    .metric { background: var(--surface-alt); border-radius: .8rem; padding: 1rem; }
+    .metric-label { color: var(--muted); font-size: .9rem; margin: 0; }
+    .metric-value { font-size: 1.45rem; font-weight: 800; margin: .25rem 0 0; }
+    .weather-footnote { color: var(--muted); font-size: .88rem; margin-top: 1rem; }
+    .loading { opacity: .7; }
+    @media (min-width: 620px) { .weather-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 520px) { .search-form > button { width: 100%; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Prabhuprakash Mohapatra home">Prabhuprakash Mohapatra<span>.</span></a>
+      <div class="header-actions">
+        <nav aria-label="Main navigation">
+          <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="todo.html">To-Do App</a></li>
+            <li><a href="weather.html" aria-current="page">Weather</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">🌙 Theme</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="container page-content">
+    <header class="page-heading weather-wrap">
+      <p class="eyebrow">JavaScript · Fetch API · REST</p>
+      <h1>Weather Dashboard</h1>
+      <p>Search for a city to retrieve current weather conditions from a public weather API.</p>
+    </header>
+
+    <section class="weather-wrap weather-panel" aria-labelledby="search-heading">
+      <h2 id="search-heading">Find a city's weather</h2>
+      <form id="weather-form" class="search-form">
+        <div class="form-field">
+          <label for="city-input">City name</label>
+          <input id="city-input" name="city" type="search" placeholder="e.g. Bhubaneswar" autocomplete="off" maxlength="80" required>
+        </div>
+        <button id="search-button" class="button" type="submit">Search weather</button>
+      </form>
+      <p id="weather-message" class="weather-message" role="status" aria-live="polite">Enter a city name to get the latest available conditions.</p>
+
+      <section id="weather-result" class="weather-result" aria-label="Current weather" hidden>
+        <div class="weather-top">
+          <div>
+            <h2 id="location-name" class="weather-place"></h2>
+            <p id="condition" class="weather-condition"></p>
+          </div>
+          <p id="temperature" class="weather-temp" aria-label="Temperature"></p>
+        </div>
+        <div class="weather-grid">
+          <article class="metric">
+            <p class="metric-label">Feels like</p>
+            <p id="feels-like" class="metric-value">—</p>
+          </article>
+          <article class="metric">
+            <p class="metric-label">Humidity</p>
+            <p id="humidity" class="metric-value">—</p>
+          </article>
+          <article class="metric">
+            <p class="metric-label">Wind speed</p>
+            <p id="wind" class="metric-value">—</p>
+          </article>
+        </div>
+        <p id="updated-time" class="weather-footnote"></p>
+      </section>
+      <p class="weather-footnote">Weather data provided by Open-Meteo. Conditions are model-based and may differ from a nearby weather station.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container"><p>© <span id="year">2026</span> Prabhuprakash Mohapatra. Built with semantic HTML5 and JavaScript.</p></div></footer>
+  <script src="script.js" defer></script>
+  <script src="weather.js" defer></script>
+</body>
+</html>
